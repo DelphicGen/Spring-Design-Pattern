@@ -29,7 +29,6 @@ public class DependencyInjectionApplication {
         public static class Bar {
             @Autowired // ksh tau spring ini harus diinject
             private Foo foo;
-
         }
 
     }

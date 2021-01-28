@@ -21,6 +21,7 @@ public class FactoryApplication {
         private String password;
     }
 
+    // pas di comple <Database> jadi <Object>. saat dicompile informasi itu hilang jd spring hrs tau datanya apa
     public static class DatabaseFactory implements FactoryBean<Database> {
 
         @Override

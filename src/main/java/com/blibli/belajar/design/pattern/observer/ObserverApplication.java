@@ -45,10 +45,10 @@ public class ObserverApplication {
         }
     }
 
-    public static class RedisObserver implements ApplicationListener<ApplicationEvent>{
+    public static class RedisObserver implements ApplicationListener<ProductEvent>{
 
         @Override
-        public void onApplicationEvent(ApplicationEvent event) {
+        public void onApplicationEvent(ProductEvent event) {
             System.out.println("Kirim ke redis server");
         }
     }

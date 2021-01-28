@@ -30,45 +30,70 @@ public class ProxyApplication {
             System.out.println("Call Customer ServiceImpl method update()");
             System.out.println("Update database");
         }
+    }
 
-        public static class LogInterceptor implements MethodInterceptor {
-            @Override
-            public Object invoke(MethodInvocation invocation) throws Throwable {
-                try {
-                    System.out.println("Manggil class " + invocation.getMethod());
-                    return invocation.proceed();
-                }
-                finally {
-                    System.out.println("Selesai method" + invocation.getMethod());
-                }
+    public static class LogInterceptor implements MethodInterceptor {
+        @Override
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+            try {
+                System.out.println("Manggil method " + invocation.getMethod());
+                return invocation.proceed();
+            }
+            finally {
+                System.out.println("Selesai method" + invocation.getMethod());
             }
         }
+    }
 
-        @SpringBootApplication
-        public  static class Application {
-            @Bean
-            public ProxyFactoryBean customerService() {
+    public static class ValidationInterceptor implements MethodInterceptor {
+
+        @Override
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+
+            Object[] arguments = invocation.getArguments();
+            for (Object argument : arguments) {
+                if(argument instanceof String){
+                    String value = (String) argument;
+                    if(value.equals("")){
+                        throw new RuntimeException("argument tidak boleh string kosong");
+                    }
+                }
+            }
+
+            return invocation.proceed();
+        }
+    }
+
+    @SpringBootApplication
+    public  static class Application {
+        @Bean
+        public ProxyFactoryBean customerService() {
 //                return new CustomerServiceImpl();
-                ProxyFactoryBean factoryBean = new ProxyFactoryBean();
-                factoryBean.setInterfaces(CustomerService.class);
-                factoryBean.setTarget(new CustomerServiceImpl());
-                factoryBean.setInterceptorNames("logInterceptor");
-                return factoryBean;
-            }
-
-            @Bean("logInterceptor")
-            public LogInterceptor logInterceptor() {
-                return new LogInterceptor();
-            }
+            ProxyFactoryBean factoryBean = new ProxyFactoryBean();
+            factoryBean.setInterfaces(CustomerService.class);
+            factoryBean.setTarget(new CustomerServiceImpl());
+            factoryBean.setInterceptorNames("logInterceptor", "validationInterceptor");
+            return factoryBean;
         }
 
-        public static void main(String[] args) {
-            ApplicationContext context = SpringApplication.run(Application.class);
-            CustomerService customerService = context.getBean(CustomerService.class);
-            customerService.save("1", "Eko");
-            customerService.update("1", "Eko");
-
+        @Bean("logInterceptor")
+        public LogInterceptor logInterceptor() {
+            return new LogInterceptor();
         }
+
+        @Bean("validationInterceptor")
+        public ValidationInterceptor validationInterceptor(){
+            return new ValidationInterceptor();
+        }
+    }
+
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(Application.class);
+        CustomerService customerService = context.getBean(CustomerService.class);
+        customerService.save("1", "Eko");
+        customerService.update("1", "Eko");
+//        customerService.save("", "");
 
     }
+
 }

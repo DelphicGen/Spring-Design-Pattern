@@ -49,15 +49,15 @@ public class ChainApplication {
 
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//                System.out.println("Pre Handle");
-//                return true;
-                String xApi = request.getHeader("X-API");
-                if(StringUtils.hasText(xApi)) {
-                    return true;
-                } else {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    return false;
-                }
+                System.out.println("Pre Handle");
+                return true;
+//                String xApi = request.getHeader("X-API");
+//                if(StringUtils.hasText(xApi)) {
+//                    return true;
+//                } else {
+//                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                    return false;
+//                }
             }
         }
 

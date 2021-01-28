@@ -74,6 +74,7 @@ public class ObserverApplication {
             return new MessageBrokerObserver();
         }
 
+        @Bean
         public RedisObserver redisObserver(){
             return new RedisObserver();
         }

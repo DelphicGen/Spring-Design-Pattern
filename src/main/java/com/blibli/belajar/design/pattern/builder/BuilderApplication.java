@@ -1,9 +1,6 @@
 package com.blibli.belajar.design.pattern.builder;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -19,6 +16,7 @@ public class BuilderApplication {
         private String nama;
         private String alamat;
         private Date tanggalLahir;
+        @Singular("hobi")
         private List<String> hobi;
     }
 
@@ -35,7 +33,9 @@ public class BuilderApplication {
                 .nama("Eko")
                 .alamat("Indonesia")
                 .tanggalLahir(new Date())
-                .hobi(Arrays.asList("Game", "Coding"))
+//                .hobi(Arrays.asList("Game", "Coding"))
+                .hobi("Game")
+                .hobi("Coding")
                 .build(); // balikkan object mahasiswa
 
         System.out.println(mahasiswa);

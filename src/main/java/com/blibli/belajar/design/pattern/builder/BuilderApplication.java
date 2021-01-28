@@ -23,12 +23,12 @@ public class BuilderApplication {
     }
 
     public static void main(String[] args) {
-//        Mahasiswa mahasiswa = new Mahasiswa();
-//        mahasiswa.setNim("1212");
-//        mahasiswa.setNama("Eko");
-//        mahasiswa.setAlamat("Indonesia");
-//        mahasiswa.setTanggalLahir(new Date());
-//        mahasiswa.setHobi(Arrays.asList("Game", "Coding"));
+        Mahasiswa mahasiswa = new Mahasiswa();
+        mahasiswa.setNim("1212");
+        mahasiswa.setNama("Eko");
+        mahasiswa.setAlamat("Indonesia");
+        mahasiswa.setTanggalLahir(new Date());
+        mahasiswa.setHobi(Arrays.asList("Game", "Coding"));
 
         Mahasiswa mahasiswa2 = Mahasiswa.builder()
                 .nim("1212")
@@ -37,6 +37,8 @@ public class BuilderApplication {
                 .tanggalLahir(new Date())
                 .hobi(Arrays.asList("Game", "Coding"))
                 .build(); // balikkan object mahasiswa
+
+        System.out.println(mahasiswa);
         System.out.println(mahasiswa2);
 
     }

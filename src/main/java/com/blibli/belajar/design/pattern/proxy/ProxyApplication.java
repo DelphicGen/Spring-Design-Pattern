@@ -69,8 +69,8 @@ public class ProxyApplication {
         @Bean
         public ProxyFactoryBean customerService() {
 //                return new CustomerServiceImpl();
-            ProxyFactoryBean factoryBean = new ProxyFactoryBean();
-            factoryBean.setInterfaces(CustomerService.class);
+            ProxyFactoryBean factoryBean = new ProxyFactoryBean(); // proxy factory bean adalah factory bean, jd definisi tipenya bukan drproxy factory bean, dapat nya dari getObjectType
+            factoryBean.setInterfaces(CustomerService.class); // getObjectType
             factoryBean.setTarget(new CustomerServiceImpl());
             factoryBean.setInterceptorNames("logInterceptor", "validationInterceptor");
             return factoryBean;

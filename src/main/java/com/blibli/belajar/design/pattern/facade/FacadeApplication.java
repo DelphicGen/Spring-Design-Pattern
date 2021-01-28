@@ -69,7 +69,7 @@ public class FacadeApplication {
     @SpringBootApplication
     public static class Application {
 
-        @Bean("postgre")
+//        @Bean("postgre")
         public AddressService addressServicePostgre() {
             return new AddressServiceImplPostgre();
         }
@@ -82,7 +82,8 @@ public class FacadeApplication {
 
         @Bean
 //        @Autowired // cari bean dengan tipe AddressService trs masukkan ke addressService
-        public AddressController addressController(@Qualifier("Postgre") AddressService addressService) {
+//        @Qualifier("Postgre")
+        public AddressController addressController(AddressService addressService) {
             AddressController controller = new AddressController();
             controller.setAddressService(addressService);
             return controller;

@@ -37,7 +37,7 @@ public class BuilderApplication {
                 .tanggalLahir(new Date())
                 .hobi(Arrays.asList("Game", "Coding"))
                 .build(); // balikkan object mahasiswa
-
+        System.out.println(mahasiswa2);
 
     }
 }

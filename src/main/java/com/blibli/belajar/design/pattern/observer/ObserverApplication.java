@@ -15,6 +15,16 @@ public class ObserverApplication {
         private String id;
         private String name;
     }
+    public static class Customer {
+        private String id;
+        private String name;
+    }
+
+    public static class CustomerEvent extends ApplicationEvent {
+        public CustomerEvent(Customer source) {
+            super(source);
+        }
+    }
 
     public static class ProductEvent extends ApplicationEvent {
         public ProductEvent(Product source) {
@@ -30,6 +40,7 @@ public class ObserverApplication {
         public void save(Product product) {
             System.out.println("Done save to database");
             applicationEventPublisher.publishEvent(new ProductEvent(product));
+            applicationEventPublisher.publishEvent(new CustomerEvent(new Customer()));
 //            kirim ke message broker
 //            kirim ke log server
 //            kirim ke redis cache
@@ -45,11 +56,16 @@ public class ObserverApplication {
         }
     }
 
-    public static class RedisObserver implements ApplicationListener<ProductEvent>{
+    public static class RedisObserver implements ApplicationListener<ApplicationEvent>{
 
         @Override
-        public void onApplicationEvent(ProductEvent event) {
-            System.out.println("Kirim ke redis server");
+        public void onApplicationEvent(ApplicationEvent event) {
+//            System.out.println("Kirim ke redis server");
+            if(event instanceof ProductEvent) {
+                System.out.println("Kirim product ke redis server");
+            } else if(event instanceof CustomerEvent) {
+                System.out.println("Kirim customer ke redis server");
+            }
         }
     }
 
